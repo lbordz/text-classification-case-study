@@ -1,16 +1,16 @@
-## Text Classification Case Study
+# Text Classification Case Study
 
 
-#### My Goal
+## My Goal
 
 The goal of this case study is to build a model that identifies which mobile phone apps are related to fitness.
 
-#### The Data
+## The Data
 
 * one file contains text descriptions for 2500+ mobile phone apps
 * one file contains the labels indicating if the app is a fitness app or not
 
-#### Results
+## Results
 
 My final model had a ROC AUC score of 97.5% on the test data. This means that given one true positive and one true negative, my model would correctly predict that the fitness-app is more likely to be a fitness app compared to the not-fitness app 96% of the time.
 
@@ -46,7 +46,7 @@ The top 20 word-roots in the descriptions that indicated a fitness-related app w
 
 
 
-#### My Approach (Decisions I Made)
+## My Approach (Decisions I Made)
 
 
 To approach this problem:
