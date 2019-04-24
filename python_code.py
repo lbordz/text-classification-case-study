@@ -55,6 +55,20 @@ class AppTextClassifier():
         return tfidf_transform
 
 
+def print_most_predictive_words(vectorizer, model, n=25):
+    '''
+    n: integer: number top of words you want to see
+    '''
+    feature_names = vectorizer.get_feature_names()
+    coefs_with_word_stem = sorted(zip(model.coef_[0], feature_names))
+    top = coefs_with_word_stem[:-(n + 1):-1]
+    for (coef, word_stem) in top:
+        print (word_stem)
+
+
+
+# ------- code to run ----- #
+
 
 if __name__  == "__main__":
 
@@ -70,11 +84,14 @@ if __name__  == "__main__":
     X_train_tfidf = atc.fit(X_train, "original_text")
     model = MultinomialNB()
     estimated_roc_auc = cross_val_score(model, X_train_tfidf, y_train, cv = 3, scoring='roc_auc')
-    print("Average Estimated ROC AUC score based on cross validation:  ", estimated_roc_auc.mean() )
+    print("Average Estimated ROC AUC score based on cross validation:  ", estimated_roc_auc.mean(), '\n' )
 
-    #final ROC AUC, assuming we have the final model we're going to use
+    #print final ROC AUC, assuming we have the final model we're going to use
     model.fit(X_train_tfidf, y_train)
-
     X_test_tfidf = atc.transform(X_test, "original_text")
     y_test_pred = model.predict_proba(X_test_tfidf)
-    print("Final ROC AUC score of test set: ", roc_auc_score(y_test, y_test_pred[:,1]))
+    print("Final ROC AUC score of test set: ", roc_auc_score(y_test, y_test_pred[:,1]), '\n')
+
+    #print top 25 words
+    print("Top 25 words:")
+    print_most_predictive_words(atc.tfidf, model, n=25)
